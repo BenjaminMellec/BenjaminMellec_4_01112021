@@ -54,7 +54,6 @@ function inputNumberValidation(number) {
 }
 
 function validate() {
-  let validated;
   let first = document.getElementById("first").value;
   let last = document.getElementById("last").value;
   let email = document.getElementById("email").value;
@@ -66,10 +65,8 @@ function validate() {
     inputEmailValidation(email) &&
     inputNumberValidation(quantity)
   ) {
-    validated = true;
+    return true;
   } else {
-    validated = false;
+    return false;
   }
-
-  return validated;
 }
