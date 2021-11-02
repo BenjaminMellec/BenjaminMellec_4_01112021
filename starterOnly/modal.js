@@ -39,6 +39,7 @@ function inputTextValidation(text) {
 
 // function to validate inputs type email
 function inputEmailValidation(email) {
+  // regular expression given by w3c to test input mail value (https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html)
   const regExp =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regExp.test(email);
@@ -53,17 +54,34 @@ function inputNumberValidation(number) {
   }
 }
 
+// function to validate inputs type radio
+function inputRadioValidation(radios) {
+  let radioChecked = false;
+  for (radio of radios) {
+    if (radio.checked) {
+      radioChecked = true;
+      break;
+    }
+  }
+  return radioChecked;
+}
+
+// final function using all others to validate the form fields
 function validate() {
-  let first = document.getElementById("first").value;
-  let last = document.getElementById("last").value;
-  let email = document.getElementById("email").value;
-  let quantity = document.getElementById("quantity").value;
+  const first = document.getElementById("first").value;
+  const last = document.getElementById("last").value;
+  const email = document.getElementById("email").value;
+  const quantity = document.getElementById("quantity").value;
+  const locations = document.querySelectorAll('[name="location"]');
+  const conditions = document.getElementById("checkbox1").checked;
 
   if (
     inputTextValidation(first) &&
     inputTextValidation(last) &&
     inputEmailValidation(email) &&
-    inputNumberValidation(quantity)
+    inputNumberValidation(quantity) &&
+    inputRadioValidation(locations) &&
+    conditions
   ) {
     return true;
   } else {
