@@ -29,25 +29,28 @@ function closeModal() {
 }
 
 // function to validate "first" and "last" inputs, which are text inputs
-function inputTextValidation(text) {
-  if (text.length > 2) {
+function inputTextValidation(input) {
+  if (input.value.length > 2) {
+    input.parentElement.setAttribute("data-error-visible", false);
     return true;
   } else {
+    input.parentElement.setAttribute("data-error-visible", true);
     return false;
   }
 }
 
 // function to validate inputs type email
-function inputEmailValidation(email) {
+function inputEmailValidation(input) {
   // regular expression given by w3c to test input mail value (https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html)
   const regExp =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regExp.test(email);
+
+  return regExp.test(input);
 }
 
 // function to validate inputs type number
-function inputNumberValidation(number) {
-  if (isNaN(number) || number < 0 || number > 99 || !number) {
+function inputNumberValidation(input) {
+  if (isNaN(input) || input < 0 || input > 99 || !input) {
     return false;
   } else {
     return true;
@@ -55,9 +58,9 @@ function inputNumberValidation(number) {
 }
 
 // function to validate inputs type radio
-function inputRadioValidation(radios) {
+function inputRadioValidation(input) {
   let radioChecked = false;
-  for (radio of radios) {
+  for (radio of input) {
     if (radio.checked) {
       radioChecked = true;
       break;
@@ -68,8 +71,8 @@ function inputRadioValidation(radios) {
 
 // final function using all others to validate the form fields
 function validate() {
-  const first = document.getElementById("first").value;
-  const last = document.getElementById("last").value;
+  const first = document.getElementById("first");
+  const last = document.getElementById("last");
   const email = document.getElementById("email").value;
   const quantity = document.getElementById("quantity").value;
   const locations = document.querySelectorAll('[name="location"]');

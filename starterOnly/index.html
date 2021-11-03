@@ -62,7 +62,7 @@
               method="get"
               onsubmit="return validate();"
             >
-              <div class="formData">
+              <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prénom.">
                 <label for="first">Prénom</label><br>
                 <input
                   class="text-control"
@@ -72,7 +72,7 @@
                   minlength="2"
                 /><br>
               </div>
-              <div class="formData">
+              <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du nom.">
                 <label for="last">Nom</label><br>
                 <input
                   class="text-control"
@@ -81,7 +81,7 @@
                   name="last"
                 /><br>
               </div>
-              <div class="formData">
+              <div class="formData" data-error="Veuillez entrer une adresse email valide">
                 <label for="email">E-mail</label><br>
                 <input
                   class="text-control"
@@ -90,7 +90,7 @@
                   name="email"
                 /><br>
               </div>
-              <div class="formData">
+              <div class="formData" data-error="Vous devez entrer votre date de naissance.">
                 <label for="birthdate">Date de naissance</label><br>
                 <input
                   class="text-control"
@@ -99,12 +99,12 @@
                   name="birthdate"
                 /><br>
               </div>
-              <div class="formData">
+              <div class="formData" data-error="Vous devez rentrer un nombre entre 0 et 99">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
               <p class="text-label">Quelles villes ?</p>
-              <div class="formData">
+              <div class="formData" data-error="Vous devez sélectionner une ville">
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -179,7 +179,7 @@
                 >
               </div>
 
-              <div class="formData">
+              <div class="formData" data-error="Vous devez vérifier que vous acceptez les termes et conditions.">
                 <input
                   class="checkbox-input"
                   type="checkbox"
@@ -191,6 +191,8 @@
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br>
+
+
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
