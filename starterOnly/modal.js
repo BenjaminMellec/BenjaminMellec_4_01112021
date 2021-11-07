@@ -42,26 +42,62 @@ function inputTextValidation(input) {
 // function to validate inputs type email
 function inputEmailValidation(input) {
   // regular expression given by w3c to test input mail value (https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html)
-  const regExp =
+  const regexEmail =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  return regExp.test(input);
+  if (input.value !== "" && regexEmail.test(input.value)) {
+    input.parentElement.setAttribute("data-error-visible", false);
+    return true;
+  } else {
+    input.parentElement.setAttribute("data-error-visible", true);
+    return false;
+  }
+}
+
+// function to validate inputs type date
+function inputDateValidation(input) {
+  const regexDate = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
+
+  // valueify today's date & input's date to compare them
+  const today = new Date().getTime();
+  const inputValueified = new Date(input.value).getTime();
+
+  if (
+    input.value !== "" &&
+    regexDate.test(input.value) &&
+    inputValueified < today
+  ) {
+    input.parentElement.setAttribute("data-error-visible", false);
+    return true;
+  } else {
+    input.parentElement.setAttribute("data-error-visible", true);
+    return false;
+  }
 }
 
 // function to validate inputs type number
 function inputNumberValidation(input) {
-  if (isNaN(input) || input < 0 || input > 99 || !input) {
+  if (
+    isNaN(input.value) ||
+    input.value < 0 ||
+    input.value > 99 ||
+    !input.value
+  ) {
+    input.parentElement.setAttribute("data-error-visible", true);
     return false;
   } else {
+    input.parentElement.setAttribute("data-error-visible", false);
     return true;
   }
 }
 
 // function to validate inputs type radio
-function inputRadioValidation(input) {
+function inputRadioValidation(inputs) {
   let radioChecked = false;
-  for (radio of input) {
+  for (radio of inputs) {
+    radio.parentElement.setAttribute("data-error-visible", true);
     if (radio.checked) {
+      radio.parentElement.setAttribute("data-error-visible", false);
       radioChecked = true;
       break;
     }
@@ -69,22 +105,43 @@ function inputRadioValidation(input) {
   return radioChecked;
 }
 
+// function to validate inputs type checkbox
+function inputCheckboxValidation(input) {
+  if (input.checked) {
+    input.parentElement.setAttribute("data-error-visible", false);
+    return true;
+  } else {
+    input.parentElement.setAttribute("data-error-visible", true);
+    return false;
+  }
+}
+
 // final function using all others to validate the form fields
 function validate() {
   const first = document.getElementById("first");
   const last = document.getElementById("last");
-  const email = document.getElementById("email").value;
-  const quantity = document.getElementById("quantity").value;
+  const email = document.getElementById("email");
+  const birthdate = document.getElementById("birthdate");
+  const quantity = document.getElementById("quantity");
   const locations = document.querySelectorAll('[name="location"]');
-  const conditions = document.getElementById("checkbox1").checked;
+  const conditions = document.getElementById("checkbox1");
+
+  inputTextValidation(first);
+  inputTextValidation(last);
+  inputEmailValidation(email);
+  inputDateValidation(birthdate);
+  inputNumberValidation(quantity);
+  inputRadioValidation(locations);
+  inputCheckboxValidation(conditions);
 
   if (
     inputTextValidation(first) &&
     inputTextValidation(last) &&
     inputEmailValidation(email) &&
+    inputDateValidation(birthdate) &&
     inputNumberValidation(quantity) &&
     inputRadioValidation(locations) &&
-    conditions
+    inputCheckboxValidation(conditions)
   ) {
     return true;
   } else {
