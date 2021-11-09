@@ -10,9 +10,12 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const modalClose = document.querySelectorAll(".close");
+const modalClose = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
 const form = document.getElementById("reserve");
+const submitButton = document.querySelector(".btn-submit");
+const modalSuccess = document.getElementById("success");
+const closeSuccessElements = document.querySelectorAll(".close-success");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -22,7 +25,7 @@ function launchModal() {
 }
 
 // close modal event
-modalClose.forEach((cross) => cross.addEventListener("click", closeModal));
+modalClose.addEventListener("click", closeModal);
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
@@ -116,6 +119,21 @@ function inputCheckboxValidation(input) {
   }
 }
 
+// cancel the reload of the page when submitting the form and submit the form when the thank you message closes
+function thanks(event) {
+  event.preventDefault();
+  form.style.display = "none";
+  modalSuccess.style.display = "block";
+  modalClose.classList.remove("close");
+  modalClose.classList.add("close-success");
+
+  for (closeSuccess of closeSuccessElements) {
+    this.addEventListener("click", function (e) {
+      form.submit();
+    });
+  }
+}
+
 // final function using all others to validate the form fields
 function validate() {
   const first = document.getElementById("first");
@@ -143,6 +161,7 @@ function validate() {
     inputRadioValidation(locations) &&
     inputCheckboxValidation(conditions)
   ) {
+    thanks(this.event);
     return true;
   } else {
     return false;

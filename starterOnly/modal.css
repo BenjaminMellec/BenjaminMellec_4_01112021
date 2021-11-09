@@ -316,7 +316,7 @@ input[data-error]::after {
   left: 21%;
   top: 19%;
 }
-.close {
+.cross {
   position: absolute;
   right: 15px;
   top: 15px;
@@ -326,8 +326,8 @@ input[data-error]::after {
   cursor: pointer;
   transform: scale(0.7);
 }
-.close:before,
-.close:after {
+.cross:before,
+.cross:after {
   position: absolute;
   left: 15px;
   content: " ";
@@ -335,14 +335,15 @@ input[data-error]::after {
   width: 3px;
   background-color: #fff;
 }
-.close:before {
+.cross:before {
   transform: rotate(45deg);
 }
-.close:after {
+.cross:after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.modal-body__success-button {
   background: #fe142f;
   display: block;
   margin: 0 auto;
@@ -369,6 +370,31 @@ input[data-error]::after {
 }
 .select-selected {
   background-color: #fff;
+}
+
+.modal-body__success {
+  display: none;
+}
+.modal-body__success-content {
+  position: relative;
+  min-height: 50vh;
+  animation: successcontent 1.5s;
+}
+.modal-body__success-content p,
+.modal-body__success-button {
+  position: absolute;
+  left: 50%;
+}
+.modal-body__success-content p {
+  top: 50%;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.modal-body__success-button {
+  bottom: 0;
+  transform: translateX(-50%);
 }
 
 /* Style the arrow inside the select element: */
@@ -413,7 +439,7 @@ input[data-error]::after {
   z-index: 99;
 }
 
-/* Hide the items when the select box is closed: */
+/* Hide the items when the select box is crossd: */
 .select-hide {
   display: none;
 }
@@ -546,6 +572,15 @@ footer {
   from {
     opacity: 0;
     transform: translateY(-150px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes successcontent {
+  from {
+    opacity: 0;
   }
   to {
     opacity: 1;

@@ -53,14 +53,14 @@
 
       <div class="bground">
         <div class="content">
-          <span class="close"></span>
+          <span class="cross close"></span>
           <div class="modal-body">
             <form
               id="reserve"
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
+              onsubmit="return validate(this);"
             >
               <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prénom.">
                 <label for="first">Prénom</label><br>
@@ -207,6 +207,15 @@
                 value="C'est parti"
               />
             </form>
+
+            <div id="success" class="modal-body__success">
+              <div class="modal-body__success-content">
+                <p>Merci !<br>Votre réservation a été reçue.</p>
+                <button class="modal-body__success-button close-success">
+                  fermer
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
