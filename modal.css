@@ -14,7 +14,6 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -388,7 +387,6 @@ input[data-error]::after {
 .modal-body__success-content p {
   top: 50%;
   width: 100%;
-  max-width: 300px;
   text-align: center;
   transform: translate(-50%, -50%);
 }

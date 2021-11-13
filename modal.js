@@ -1,38 +1,34 @@
-function editNav() {
+// DOM Elements
+const modalbg = document.querySelector(".bground");
+const modalBtn = document.querySelectorAll(".modal-btn");
+const modalClose = document.querySelector(".close");
+const form = document.getElementById("reserve");
+const modalSuccess = document.getElementById("success");
+const closeSuccessElements = document.querySelectorAll(".close-success");
+
+let editNav = () => {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
     x.className = "topnav";
   }
-}
+};
 
-// DOM Elements
-const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
-const modalClose = document.querySelector(".close");
-const formData = document.querySelectorAll(".formData");
-const form = document.getElementById("reserve");
-const submitButton = document.querySelector(".btn-submit");
-const modalSuccess = document.getElementById("success");
-const closeSuccessElements = document.querySelectorAll(".close-success");
-
-// launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // launch modal form
-function launchModal() {
+let launchModal = () => {
   modalbg.style.display = "block";
-}
+  document.querySelector("body").style.overflow = "hidden";
+};
 
-// close modal event
-modalClose.addEventListener("click", closeModal);
 // close modal form
-function closeModal() {
+let closeModal = () => {
   modalbg.style.display = "none";
-}
+  document.querySelector("body").style.overflow = "auto";
+};
 
 // function to validate "first" and "last" inputs, which are text inputs
-function inputTextValidation(input) {
+let inputTextValidation = (input) => {
   if (input.value.length > 2) {
     input.parentElement.setAttribute("data-error-visible", false);
     return true;
@@ -40,10 +36,10 @@ function inputTextValidation(input) {
     input.parentElement.setAttribute("data-error-visible", true);
     return false;
   }
-}
+};
 
 // function to validate inputs type email
-function inputEmailValidation(input) {
+let inputEmailValidation = (input) => {
   // regular expression given by w3c to test input mail value (https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html)
   const regexEmail =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,10 +51,10 @@ function inputEmailValidation(input) {
     input.parentElement.setAttribute("data-error-visible", true);
     return false;
   }
-}
+};
 
 // function to validate inputs type date
-function inputDateValidation(input) {
+let inputDateValidation = (input) => {
   const regexDate = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
 
   // valueify today's date & input's date to compare them
@@ -76,10 +72,10 @@ function inputDateValidation(input) {
     input.parentElement.setAttribute("data-error-visible", true);
     return false;
   }
-}
+};
 
 // function to validate inputs type number
-function inputNumberValidation(input) {
+let inputNumberValidation = (input) => {
   if (
     isNaN(input.value) ||
     input.value < 0 ||
@@ -92,10 +88,10 @@ function inputNumberValidation(input) {
     input.parentElement.setAttribute("data-error-visible", false);
     return true;
   }
-}
+};
 
 // function to validate inputs type radio
-function inputRadioValidation(inputs) {
+let inputRadioValidation = (inputs) => {
   let radioChecked = false;
   for (radio of inputs) {
     radio.parentElement.setAttribute("data-error-visible", true);
@@ -106,10 +102,10 @@ function inputRadioValidation(inputs) {
     }
   }
   return radioChecked;
-}
+};
 
 // function to validate inputs type checkbox
-function inputCheckboxValidation(input) {
+let inputCheckboxValidation = (input) => {
   if (input.checked) {
     input.parentElement.setAttribute("data-error-visible", false);
     return true;
@@ -117,11 +113,11 @@ function inputCheckboxValidation(input) {
     input.parentElement.setAttribute("data-error-visible", true);
     return false;
   }
-}
+};
 
 // cancel the reload of the page when submitting the form and submit the form when the thank you message closes
-function thanks(event) {
-  event.preventDefault();
+let thanks = (sumbitEvent) => {
+  sumbitEvent.preventDefault();
   form.style.display = "none";
   modalSuccess.style.display = "block";
   modalClose.classList.remove("close");
@@ -132,10 +128,12 @@ function thanks(event) {
       form.submit();
     });
   }
-}
+};
 
 // final function using all others to validate the form fields
-function validate() {
+let validate = () => {
+  // form inputs
+  const inputs = document.getElementsByTagName("input");
   const first = document.getElementById("first");
   const last = document.getElementById("last");
   const email = document.getElementById("email");
@@ -144,26 +142,40 @@ function validate() {
   const locations = document.querySelectorAll('[name="location"]');
   const conditions = document.getElementById("checkbox1");
 
-  inputTextValidation(first);
-  inputTextValidation(last);
-  inputEmailValidation(email);
-  inputDateValidation(birthdate);
-  inputNumberValidation(quantity);
-  inputRadioValidation(locations);
-  inputCheckboxValidation(conditions);
+  // calls of the functions to test inputs
+  let validationFirst = inputTextValidation(first);
+  let validationLast = inputTextValidation(last);
+  let validationEmail = inputEmailValidation(email);
+  let validationBirthdate = inputDateValidation(birthdate);
+  let validationQuantity = inputNumberValidation(quantity);
+  let validationLocations = inputRadioValidation(locations);
+  let validationConditions = inputCheckboxValidation(conditions);
+
+  for (singleInput of inputs) {
+    singleInput.addEventListener("invalid", function (e) {
+      e.preventDefault();
+    });
+  }
 
   if (
-    inputTextValidation(first) &&
-    inputTextValidation(last) &&
-    inputEmailValidation(email) &&
-    inputDateValidation(birthdate) &&
-    inputNumberValidation(quantity) &&
-    inputRadioValidation(locations) &&
-    inputCheckboxValidation(conditions)
+    validationFirst &&
+    validationLast &&
+    validationEmail &&
+    validationBirthdate &&
+    validationQuantity &&
+    validationLocations &&
+    validationConditions
   ) {
+    console.log(this.event);
     thanks(this.event);
     return true;
   } else {
     return false;
   }
-}
+};
+
+// launch modal event
+modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+
+// close modal event
+modalClose.addEventListener("click", closeModal);
