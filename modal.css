@@ -152,7 +152,7 @@ main {
 .bground {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   left: 0;
   top: 0;
   height: 100%;
@@ -426,29 +426,19 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  border-radius: 10px;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
   overflow: hidden;
+  border-radius: 10px;
   box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.25);
 }
 .hero-content {
-  padding: 51px 67px;
-  grid-column: span 4;
-  background: #232323;
-  color: #fff;
   position: relative;
-  text-align: left;
+  width: 40%;
   min-width: 424px;
-}
-.hero-content::after {
-  content: "";
-  width: 100%;
-  height: 100%;
+  padding: 56px;
+  color: #fff;
   background: #232323;
-  position: absolute;
-  right: -80px;
-  top: 0;
+  text-align: left;
 }
 .hero-content > * {
   position: relative;
@@ -460,7 +450,6 @@ input[data-error]::after {
   white-space: nowrap;
 }
 .hero-text {
-  width: 146%;
   font-weight: normal;
   margin-top: 57px;
   padding: 0;
@@ -476,13 +465,14 @@ input[data-error]::after {
   margin-top: 59px;
 }
 .hero-img {
-  grid-column: span 8;
+  width: 60%;
 }
 .hero-img img {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
   padding: 0;
+  object-fit: cover;
 }
 .copyrights {
   color: var(--primary);
@@ -498,10 +488,15 @@ footer {
   padding: 0 30px;
 }
 
+@media screen and (max-width: 1300px) {
+  .hero-headline {
+    white-space: normal;
+    width: 80vw;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .topnav {
-    position: fixed;
-    top: 0;
     flex-direction: column;
     width: 100%;
     margin: 0;
@@ -519,25 +514,24 @@ footer {
     justify-content: center;
   }
   main {
-    margin: 212px 20px 0;
+    margin: 20px 20px 0;
   }
   .hero-section {
     display: block;
     box-shadow: unset;
   }
   .hero-content {
+    width: 100%;
     min-width: 0;
     background: #fff;
     color: #000;
     padding: 0;
   }
-  .hero-content::after {
-    content: unset;
-  }
   .hero-content .btn-signup {
     display: none;
   }
   .hero-headline {
+    width: 100%;
     font-size: 4rem;
     white-space: normal;
   }
@@ -547,6 +541,9 @@ footer {
   .hero-text {
     width: unset;
     font-size: 1.5rem;
+  }
+  .hero-img {
+    width: 100%;
   }
   .hero-img img {
     border-radius: 10px;
@@ -558,7 +555,7 @@ footer {
     padding: 12px 35px;
   }
   .content {
-    margin: 252px auto 50px;
+    margin: 50px auto 50px;
   }
   .copyrights {
     margin-top: 50px;
@@ -568,7 +565,10 @@ footer {
 
 @media screen and (max-width: 768px) {
   .topnav {
+    position: fixed;
+    top: 0;
     flex-direction: row;
+    z-index: 11;
   }
   .topnav a {
     display: none;
@@ -643,8 +643,6 @@ footer {
   .topnav.responsive .main-navbar {
     top: 86px;
   }
-  .header-logo {
-  }
   .header-logo img {
     width: 130px;
     height: auto;
@@ -666,7 +664,7 @@ footer {
     margin-top: 20px;
   }
   .content {
-    margin-top: 86px;
+    margin: 86px auto 0 auto;
   }
   .copyrights {
     font-size: 0.8rem;

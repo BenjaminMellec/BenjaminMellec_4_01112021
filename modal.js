@@ -5,13 +5,14 @@ const modalClose = document.querySelector(".close");
 const form = document.getElementById("reserve");
 const modalSuccess = document.getElementById("success");
 const closeSuccessElements = document.querySelectorAll(".close-success");
+const buttonSubmit = document.querySelector(".btn-submit");
 
 let editNav = () => {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
+  var nav = document.getElementById("myTopnav");
+  if (nav.className === "topnav") {
+    nav.className += " responsive";
   } else {
-    x.className = "topnav";
+    nav.className = "topnav";
   }
 };
 
@@ -116,21 +117,20 @@ let inputCheckboxValidation = (input) => {
 };
 
 // cancel the reload of the page when submitting the form and submit the form when the thank you message closes
-let thanks = (sumbitEvent) => {
-  sumbitEvent.preventDefault();
+let thanks = () => {
   form.style.display = "none";
   modalSuccess.style.display = "block";
   modalClose.classList.remove("close");
   modalClose.classList.add("close-success");
 
   for (closeSuccess of closeSuccessElements) {
-    this.addEventListener("click", function (e) {
+    closeSuccess.addEventListener("click", function (e) {
       form.submit();
     });
   }
 };
 
-// final function using all others to validate the form fields
+// main function using all the others to validate the form fields
 let validate = () => {
   // form inputs
   const inputs = document.getElementsByTagName("input");
@@ -151,12 +151,6 @@ let validate = () => {
   let validationLocations = inputRadioValidation(locations);
   let validationConditions = inputCheckboxValidation(conditions);
 
-  for (singleInput of inputs) {
-    singleInput.addEventListener("invalid", function (e) {
-      e.preventDefault();
-    });
-  }
-
   if (
     validationFirst &&
     validationLast &&
@@ -166,8 +160,6 @@ let validate = () => {
     validationLocations &&
     validationConditions
   ) {
-    console.log(this.event);
-    thanks(this.event);
     return true;
   } else {
     return false;
@@ -179,3 +171,13 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // close modal event
 modalClose.addEventListener("click", closeModal);
+
+// cancel the default sumbission event to display a thank you message
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  let validated = validate();
+
+  if (validated) {
+    thanks();
+  }
+});
