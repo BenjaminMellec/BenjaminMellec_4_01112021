@@ -7,6 +7,7 @@ const modalSuccess = document.getElementById("success");
 const closeSuccessElements = document.querySelectorAll(".close-success");
 const buttonSubmit = document.querySelector(".btn-submit");
 
+// responsive menu
 let editNav = () => {
   var nav = document.getElementById("myTopnav");
   if (nav.className === "topnav") {
@@ -133,7 +134,6 @@ let thanks = () => {
 // main function using all the others to validate the form fields
 let validate = () => {
   // form inputs
-  const inputs = document.getElementsByTagName("input");
   const first = document.getElementById("first");
   const last = document.getElementById("last");
   const email = document.getElementById("email");
